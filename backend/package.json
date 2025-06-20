@@ -1,0 +1,142 @@
+{
+  "name": "mybestangel-backend",
+  "version": "1.0.0",
+  "description": "API REST para plataforma de turismo MyBestAngel durante a COP30 em Belém",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "test": "jest --detectOpenHandles",
+    "test:watch": "jest --watch --detectOpenHandles",
+    "test:coverage": "jest --coverage --detectOpenHandles",
+    "migrate": "knex migrate:latest",
+    "migrate:rollback": "knex migrate:rollback",
+    "migrate:make": "knex migrate:make",
+    "seed": "knex seed:run",
+    "seed:make": "knex seed:make",
+    "db:setup": "npm run migrate && npm run seed",
+    "db:reset": "npm run migrate:rollback && npm run migrate && npm run seed",
+    "lint": "eslint . --ext .js",
+    "lint:fix": "eslint . --ext .js --fix",
+    "format": "prettier --write \"**/*.{js,json,md}\"",
+    "docs": "swagger-jsdoc -d ./config/swagger.js -o ./docs/swagger.json",
+    "logs:clear": "rm -rf logs/*.log",
+    "prepare": "husky install"
+  },
+  "keywords": [
+    "turismo",
+    "belém",
+    "cop30",
+    "guia",
+    "tour",
+    "api",
+    "rest",
+    "nodejs",
+    "express"
+  ],
+  "author": {
+    "name": "Caique Rabelo Neves",
+    "email": "caique@mybestangel.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "compression": "^1.8.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "express-validator": "^7.0.1",
+    "helmet": "^7.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^3.0.1",
+    "moment": "^2.29.4",
+    "multer": "^1.4.5-lts.1",
+    "sqlite3": "^5.1.6",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "winston": "^3.17.0",
+    "winston-daily-rotate-file": "^4.7.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.8",
+    "eslint": "^8.54.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-node": "^11.1.0",
+    "husky": "^8.0.3",
+    "jest": "^29.7.0",
+    "lint-staged": "^15.1.0",
+    "nodemon": "^3.0.2",
+    "prettier": "^3.1.0",
+    "supertest": "^6.3.3"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/caique-rabelo/mybestangel-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/caique-rabelo/mybestangel-api/issues"
+  },
+  "homepage": "https://mybestangel.com",
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setup.js"
+    ],
+    "testMatch": [
+      "**/__tests__/**/*.js",
+      "**/?(*.)+(spec|test).js"
+    ],
+    "collectCoverageFrom": [
+      "**/*.js",
+      "!node_modules/**",
+      "!coverage/**",
+      "!logs/**",
+      "!data/**",
+      "!docs/**"
+    ],
+    "coverageReporters": [
+      "text",
+      "lcov",
+      "html"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 70,
+        "functions": 70,
+        "lines": 70,
+        "statements": 70
+      }
+    }
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "logs/*",
+      "data/*",
+      "docs/*",
+      "coverage/*",
+      "node_modules/*"
+    ],
+    "ext": "js,json",
+    "env": {
+      "NODE_ENV": "development"
+    }
+  },
+  "config": {
+    "api_url": "http://localhost:3001/api",
+    "docs_url": "http://localhost:3001/api-docs"
+  }
+}
